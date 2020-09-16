@@ -38,5 +38,10 @@ int main() {
 	my_sort_res = create_rand_and_quicksort(&myvector);
 	std_sort_res = myvector;
 	std::sort(std_sort_res.begin(), std_sort_res.end());
+	for (int i = 0; i < my_sort_res.size(); ++i) {
+		if (my_sort_res[i] != std_sort_res[i]) {
+			std::cout << my_sort_res[i] << "!=" << std_sort_res[i] << std::endl << "Sort work wrong" << std::endl;
+		}
+	}
 	return 0;
 }

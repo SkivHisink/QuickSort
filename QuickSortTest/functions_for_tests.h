@@ -140,7 +140,6 @@ void array_test_reverse_sorted_numbs() {
 	T* myvector = new T[100];
 	T* my_sort_res = new T[100];
 	T* std_sort_res = new T[100];
-	std_sort_res = myvector;
 	for (int i = 99; i >= 0; --i) {
 		myvector[i] = i;
 	}
@@ -149,13 +148,15 @@ void array_test_reverse_sorted_numbs() {
 	quick_sort::sort(&my_sort_res[0], &my_sort_res[100]);
 	std::sort(&std_sort_res[0], &std_sort_res[100]);
 	my_and_std_sort_result_for_array(my_sort_res, std_sort_res, 0);
+	delete myvector;
+	delete my_sort_res;
+	delete std_sort_res;
 }
 template<typename T>
 void array_test_all_equal_numbs() {
 	T* myvector = new T[100];
 	T* my_sort_res = new T[100];
 	T* std_sort_res = new T[100];
-	std_sort_res = myvector;
 	for (int i = 0; i < 100; ++i) {
 		myvector[i] = 0;
 	}
@@ -164,13 +165,15 @@ void array_test_all_equal_numbs() {
 	quick_sort::sort(&my_sort_res[0], &my_sort_res[100]);
 	std::sort(&std_sort_res[0], &std_sort_res[100]);
 	my_and_std_sort_result_for_array(my_sort_res, std_sort_res, 0);
+	delete myvector;
+	delete my_sort_res;
+	delete std_sort_res;
 }
 template<typename T>
 void array_test_already_sorted_numbs() {
 	T* myvector = new T[100];
 	T* my_sort_res = new T[100];
 	T* std_sort_res = new T[100];
-	memcpy(std_sort_res, myvector, 100 * sizeof(T));
 	for (int i = 0; i < 100; ++i) {
 		myvector[i] = i;
 	}

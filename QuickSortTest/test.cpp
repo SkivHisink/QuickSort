@@ -59,32 +59,68 @@ TEST(DequeContainerTest, UCharType) {
 }
 //
 TEST(StringContainerTest, CharType) {
-	test<std::string>();
+	_CrtMemState startPoint, endPoint, diff;
+	_CrtMemCheckpoint(&startPoint); {
+		test<std::string>();
+	}_CrtMemCheckpoint(&endPoint);
+	ASSERT_EQ(0, _CrtMemDifference(&diff, &startPoint, &endPoint)) << "Memory leaks detected";
 }
 //
 TEST(ArrayContainerTest, IntType) {
-	array_test<int>();
+	_CrtMemState startPoint, endPoint, diff;
+	_CrtMemCheckpoint(&startPoint); {
+		array_test<int>();
+	}_CrtMemCheckpoint(&endPoint);
+	ASSERT_EQ(0, _CrtMemDifference(&diff, &startPoint, &endPoint)) << "Memory leaks detected";
 }
 TEST(ArrayContainerTest, UIntType) {
-	array_test<unsigned int>();
+	_CrtMemState startPoint, endPoint, diff;
+	_CrtMemCheckpoint(&startPoint); {
+		array_test<unsigned int>();
+	}_CrtMemCheckpoint(&endPoint);
+	ASSERT_EQ(0, _CrtMemDifference(&diff, &startPoint, &endPoint)) << "Memory leaks detected";
 }
 TEST(ArrayContainerTest, FloatType) {
-	array_test<float>();
+	_CrtMemState startPoint, endPoint, diff;
+	_CrtMemCheckpoint(&startPoint); {
+		array_test<float>();
+	}_CrtMemCheckpoint(&endPoint);
+	ASSERT_EQ(0, _CrtMemDifference(&diff, &startPoint, &endPoint)) << "Memory leaks detected";
 }
 TEST(ArrayContainerTest, DoubleType) {
-	array_test<double>();
+	_CrtMemState startPoint, endPoint, diff;
+	_CrtMemCheckpoint(&startPoint); {
+		array_test<double>();
+	}_CrtMemCheckpoint(&endPoint);
+	ASSERT_EQ(0, _CrtMemDifference(&diff, &startPoint, &endPoint)) << "Memory leaks detected";
 }
 TEST(ArrayContainerTest, LongType) {
-	array_test<long>();
+	_CrtMemState startPoint, endPoint, diff;
+	_CrtMemCheckpoint(&startPoint); {
+		array_test<long>();
+	}_CrtMemCheckpoint(&endPoint);
+	ASSERT_EQ(0, _CrtMemDifference(&diff, &startPoint, &endPoint)) << "Memory leaks detected";
 }
 TEST(ArrayContainerTest, ULongType) {
-	array_test<unsigned long>();
+	_CrtMemState startPoint, endPoint, diff;
+	_CrtMemCheckpoint(&startPoint); {
+		array_test<unsigned long>();
+	}_CrtMemCheckpoint(&endPoint);
+	ASSERT_EQ(0, _CrtMemDifference(&diff, &startPoint, &endPoint)) << "Memory leaks detected";
 }
 TEST(ArrayContainerTest, CharType) {
-	array_test<char>();
+	_CrtMemState startPoint, endPoint, diff;
+	_CrtMemCheckpoint(&startPoint); {
+		array_test<char>();
+	}_CrtMemCheckpoint(&endPoint);
+	ASSERT_EQ(0, _CrtMemDifference(&diff, &startPoint, &endPoint)) << "Memory leaks detected";
 }
 TEST(ArrayContainerTest, UCharType) {
-	array_test<unsigned char>();
+	_CrtMemState startPoint, endPoint, diff;
+	_CrtMemCheckpoint(&startPoint); {
+		array_test<unsigned char>();
+	}_CrtMemCheckpoint(&endPoint);
+	ASSERT_EQ(0, _CrtMemDifference(&diff, &startPoint, &endPoint)) << "Memory leaks detected";
 }
 //
 TEST(MainComparator, CompareVectorsSizes) {
@@ -95,7 +131,6 @@ TEST(MainComparator, CompareVectorsSizes) {
 	std::vector<int> array;
 	for (int i = 0; i < 20; i++)
 		array.push_back(rand());
-
 	quick_sort::sort(array.begin(), array.end(), comparator());
 	for (int i = 0; i < array.size() - 1; i++)
 	{
