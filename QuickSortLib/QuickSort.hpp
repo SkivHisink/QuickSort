@@ -7,12 +7,12 @@ private:
 	static int partition(const RandomAccessIterator first, const int low, const int high)
 	{
 		auto tmp = first;
-		for (int i = 0; i < high; ++i) {
+		for (auto i = 0; i < high; ++i) {
 			++tmp;
 		}
 		auto pivot = tmp;
-		int i = (low - 1);
-		for (int j = low; j <= high - 1; ++j) {
+		auto i = (low - 1);
+		for (auto j = low; j <= high - 1; ++j) {
 			if (first[j] <= *pivot) {
 				++i;
 				std::swap(first[i], first[j]);
@@ -27,7 +27,7 @@ public:
 	{
 		if (low < high)
 		{
-			int partition_indx = partition(first, low, high);
+			const int partition_indx = partition(first, low, high);
 			Qsort(first, low, partition_indx - 1, comp);
 			Qsort(first, partition_indx + 1, high, comp);
 		}
