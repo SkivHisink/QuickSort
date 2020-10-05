@@ -20,7 +20,6 @@ namespace VectorContainerTests
 	TEST(VectorContainerTest, Reverse_sorted_int_numbs) {
 		test_reverse_sorted_numbs<std::vector<int>>();
 	}
-	//
 	TEST(VectorContanerTest, Random_double_numbers_test)
 	{
 		test_random_numbers<std::vector<double>>();
