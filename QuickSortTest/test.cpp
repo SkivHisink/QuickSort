@@ -83,7 +83,7 @@ namespace StringConatainerTests
 	}
 }
 namespace ArrayContainerTests {
-	
+
 	TEST(ArrayContainerTest, IntType) {
 		_CrtMemState startPoint, endPoint, diff;
 		_CrtMemCheckpoint(&startPoint); {
@@ -145,7 +145,7 @@ namespace NonStandartComparatorTests {
 	TEST(MainComparator, CompareVectorsSizes) {
 		class comparator {
 		public:
-			bool operator() (int i, int j) { return (i < j); }
+			bool operator() (int i, int j) { return (i > j); }
 		};
 		std::vector<int> array;
 		for (int i = 0; i < 20; i++)
@@ -156,4 +156,4 @@ namespace NonStandartComparatorTests {
 			EXPECT_GT(array[i + 1], array[i]);
 		}
 	}
-} 
+}

@@ -1,11 +1,26 @@
-#include <type_traits>
+﻿#include <type_traits>
 #include <iterator>
-class QuickSort {
+class std_cmp final
+{
+public:
+	template<typename T>
+	bool operator()(const T& elem1, const T& elem2)
+	{
+		if (elem1 > elem2) {
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+};
+class QuickSort final {
 	QuickSort() = delete;
 	static const int MAX_DEPTH = 48;
 public:
 	template<typename RandomAccessIterator, typename Compare = std_cmp>
-	static int Qsort(RandomAccessIterator begin, size_t elements, Compare comp = std_cmp())
+	static int Qsort(RandomAccessIterator begin, size_t elements, Compare comp = Compare())
 	{
 		size_t begin_pos_container[MAX_DEPTH], end_pos_container[MAX_DEPTH], left, right;
 		int i = 0;
@@ -17,32 +32,32 @@ public:
 			right = end_pos_container[i];
 			if (right - left > 1) {
 				size_t middle = left + ((right - left) >> 1);
-				auto piv = begin[middle];
+				auto pivot = begin[middle];
 				begin[middle] = begin[left];
-
 				if (i == MAX_DEPTH - 1) {
 					return -1;
 				}
 				--right;
 				while (left < right) {
-					while (begin[right] >= piv && left < right) {
+					while (!comp(pivot, begin[right]) && left < right) {
 						--right;
 					}
 					if (left < right)
 						begin[left++] = begin[right]; {
-						while (begin[left] <= piv && left < right)
+						while (!comp(begin[left], pivot) && left < right) {
 							++left;
+						}
 					}
 					if (left < right) {
 						begin[right--] = begin[left];
 					}
 				}
-				begin[left] = piv;
+				begin[left] = pivot;
 				middle = left + 1;
-				while (left > begin_pos_container[i] && begin[left - 1] == piv) {
+				while (left > begin_pos_container[i] && (!comp(begin[left - 1], pivot) && !comp(pivot, begin[left - 1]))) {
 					--left;
 				}
-				while (middle < end_pos_container[i] && begin[middle] == piv) {
+				while (middle < end_pos_container[i] && (!comp(begin[middle], pivot) && !comp(pivot, begin[middle]))) {
 					++middle;
 				}
 				if (left - begin_pos_container[i] > end_pos_container[i] - middle) {
@@ -63,22 +78,14 @@ public:
 		return 0;
 	}
 };
-class std_cmp
-{
-public:
-	template<typename T>
-	static bool comp(const T& elem1, const T& elem2)
-	{
-		return elem1 > elem2;
-	}
-};
+
 namespace quick_sort {
 	template<class iter>
 	using it_tag = typename std::iterator_traits<iter>::iterator_category;
 
 	template <typename RandomAccessIterator, typename Compare = std_cmp,
 		std::enable_if_t<std::is_base_of_v<std::random_access_iterator_tag, it_tag<RandomAccessIterator>>, int> = 0>
-		void sort(RandomAccessIterator first, RandomAccessIterator last, Compare comp = std_cmp())
+		void sort(RandomAccessIterator first, RandomAccessIterator last, Compare comp = Compare()/*std_cmp()*/)
 	{
 		QuickSort::Qsort(first, static_cast<int>(last - first), comp);
 	}
