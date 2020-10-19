@@ -139,9 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="QuickSort.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="QuickSort.hpp" />
   </ItemGroup>
   <ItemGroup>
