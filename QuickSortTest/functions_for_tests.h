@@ -118,8 +118,8 @@ void array_test_rand_numb() {
 	std::sort(&expected[0], &expected[NUMBER_OF_ELESMS]);
 	my_and_expected_result_compare_for_array(result, expected, NUMBER_OF_ELESMS);
 	delete input;
-	delete result;
-	delete expected;
+	delete[] result;
+	delete[] expected;
 }
 template<typename T>
 void array_test_empty_array() {
@@ -143,9 +143,9 @@ void array_test_reverse_sorted_numbs() {
 	quick_sort::sort(&result[0], &result[NUMBER_OF_ELESMS]);
 	std::sort(&expected[0], &expected[NUMBER_OF_ELESMS]);
 	my_and_expected_result_compare_for_array(result, expected, 0);
-	delete input;
-	delete result;
-	delete expected;
+	delete[] input;
+	delete[] result;
+	delete[] expected;
 }
 template<typename T>
 void array_test_all_equal_numbs() {
@@ -160,9 +160,9 @@ void array_test_all_equal_numbs() {
 	quick_sort::sort(&result[0], &result[NUMBER_OF_ELESMS]);
 	std::sort(&expected[0], &expected[NUMBER_OF_ELESMS]);
 	my_and_expected_result_compare_for_array(result, expected, 0);
-	delete input;
-	delete result;
-	delete expected;
+	delete[] input;
+	delete[] result;
+	delete[] expected;
 }
 template<typename T>
 void array_test_already_sorted_numbs() {
@@ -177,9 +177,9 @@ void array_test_already_sorted_numbs() {
 	quick_sort::sort(&result[0], &result[NUMBER_OF_ELESMS]);
 	std::sort(&expected[0], &expected[NUMBER_OF_ELESMS]);
 	my_and_expected_result_compare_for_array(result, expected, 0);
-	delete expected;
-	delete result;
-	delete input;
+	delete[] expected;
+	delete[] result;
+	delete[] input;
 }
 template<typename T>
 void array_test() {

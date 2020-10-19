@@ -5,8 +5,6 @@
 
 class QuickSort final
 {
-	QuickSort() = delete;
-
 	template <typename RandomAccessIterator, typename Compare = std::greater<>>
 	static int partition(RandomAccessIterator& arr, const int start_indx, const int end_indx, Compare comp)
 	{
@@ -24,8 +22,8 @@ class QuickSort final
 		std::swap(arr[i + 1], arr[end_indx]);
 		return (i + 1);
 	}
-
 public:
+	QuickSort() = delete;
 	template <typename RandomAccessIterator, typename Compare = std::greater<>>
 	static void Qsort(RandomAccessIterator begin, size_t elements, Compare comp = Compare())
 	{
