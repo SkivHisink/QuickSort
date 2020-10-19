@@ -1,74 +1,52 @@
 ﻿#include <type_traits>
 #include <iterator>
 #include <vector>
+#include <stack>
 class QuickSort final {
 	QuickSort() = delete;
-	static const int MAX_DEPTH = 48;
-	template<typename T, typename RandomAccessIterator, typename Compare = std::greater<>>
-	static void left_side_sort(size_t& left, size_t& right, T pivot, RandomAccessIterator begin, Compare comp = Compare())
+	template<typename RandomAccessIterator, typename Compare = std::greater<>>
+	static int partition(RandomAccessIterator& arr, const int start_indx, const int end_indx, Compare comp)
 	{
-		while (left < right) {
-			while (!comp(pivot, begin[right]) && left < right) {
-				--right;
-			}
-			if (left < right) {
-				begin[left++] = begin[right];
-			}
-			while (!comp(begin[left], pivot) && left < right) {
-				++left;
-			}
-			if (left < right) {
-				begin[right--] = begin[left];
+		auto end_indx_elem = arr[end_indx];
+		int i = (start_indx - 1);
+
+		for (int j = start_indx; j <= end_indx - 1; ++j) {
+			if (!comp(arr[j], end_indx_elem)) {
+				++i;
+				std::swap(arr[i], arr[j]);
 			}
 		}
+		std::swap(arr[i + 1], arr[end_indx]);
+		return (i + 1);
 	}
 public:
 	template<typename RandomAccessIterator, typename Compare = std::greater<>>
-	static int Qsort(RandomAccessIterator begin, size_t elements, Compare comp = Compare())
+	static void Qsort(RandomAccessIterator begin, size_t elements, Compare comp = Compare())
 	{
-		size_t left, right;
-		std::vector<size_t> begin_pos_container, end_pos_container;
-		int i = 0;
-		begin_pos_container.assign(MAX_DEPTH, 0);
-		end_pos_container.assign(MAX_DEPTH, elements);
-		while (i >= 0) {
-			left = begin_pos_container[i];
-			right = end_pos_container[i];
-			if (right - left > 1) {
-				if (i == MAX_DEPTH - 1) {
-					return -1;
-				}
-				size_t middle = left + ((right - left) >> 1);
-				auto pivot = begin[middle];
-				begin[middle] = begin[left];
-				--right;
-				left_side_sort(left, right, pivot, begin, comp);
-				begin[left] = pivot;
-				middle = left + 1;
-				while (left > begin_pos_container[i] && (!comp(begin[left - 1], pivot) && !comp(pivot, begin[left - 1]))) {
-					--left;
-				}
-				while (middle < end_pos_container[i] && (!comp(begin[middle], pivot) && !comp(pivot, begin[middle]))) {
-					++middle;
-				}
-				if (left - begin_pos_container[i] > end_pos_container[i] - middle) {
-					begin_pos_container[i + 1] = middle;
-					end_pos_container[i + 1] = end_pos_container[i];
-					end_pos_container[i++] = left;
-				}
-				else {
-					begin_pos_container[i + 1] = begin_pos_container[i];
-					end_pos_container[i + 1] = left;
-					begin_pos_container[i++] = middle;
-				}
+		std::stack<int> stack;
+		int start_indx = 0;
+		int end_indx = elements - 1;
+		if (start_indx > end_indx) {
+			return;
+		}
+		stack.push(start_indx);
+		stack.push(end_indx);
+		while (!stack.empty()) {
+			end_indx = stack.top();
+			stack.pop();
+			start_indx = stack.top();
+			stack.pop();
+			int pivot = partition(begin, start_indx, end_indx, comp);
+			if (pivot - 1 > start_indx) {
+				stack.push(start_indx);
+				stack.push(pivot - 1);
 			}
-			else {
-				--i;
+			if (pivot + 1 < end_indx) {
+				stack.push(pivot + 1);
+				stack.push(end_indx);
 			}
 		}
-		return 0;
 	}
-
 };
 
 namespace quick_sort {
@@ -82,33 +60,3 @@ namespace quick_sort {
 		QuickSort::Qsort(first, static_cast<int>(last - first), comp);
 	}
 }
-//private:
-//	template<typename RandomAccessIterator>
-//	static int partition(const RandomAccessIterator first, const int low, const int high)
-//	{
-//		auto tmp = first;
-//		for (auto i = 0; i < high; ++i) {
-//			++tmp;
-//		}
-//		auto pivot = tmp;
-//		auto i = (low - 1);
-//		for (auto j = low; j <= high - 1; ++j) {
-//			if (first[j] <= *pivot) {
-//				++i;
-//				std::swap(first[i], first[j]);
-//			}
-//		}
-//		std::swap(first[i + 1], first[high]);
-//		return (i + 1);
-//	}
-//public:
-//	template<typename RandomAccessIterator, typename Compare = std_cmp>
-//	static	void Qsort(const RandomAccessIterator first, const int low, const int high, Compare comp = std_cmp())
-//	{
-//		if (low < high)
-//		{
-//			const int partition_indx = partition(first, low, high);
-//			Qsort(first, low, partition_indx - 1, comp);
-//			Qsort(first, partition_indx + 1, high, comp);
-//		}
-//	}
