@@ -1,32 +1,17 @@
 ﻿#include <type_traits>
 #include <iterator>
-class std_cmp final
-{
-public:
-	template<typename T>
-	bool operator()(const T& elem1, const T& elem2)
-	{
-		if (elem1 > elem2) {
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-};
 class QuickSort final {
 	QuickSort() = delete;
 	static const int MAX_DEPTH = 48;
 public:
-	template<typename RandomAccessIterator, typename Compare = std_cmp>
+	template<typename RandomAccessIterator, typename Compare = std::greater<>>
 	static int Qsort(RandomAccessIterator begin, size_t elements, Compare comp = Compare())
 	{
 		size_t begin_pos_container[MAX_DEPTH], end_pos_container[MAX_DEPTH], left, right;
 		int i = 0;
 		begin_pos_container[0] = 0;
 		end_pos_container[0] = elements;
-
+		
 		while (i >= 0) {
 			left = begin_pos_container[i];
 			right = end_pos_container[i];
@@ -83,9 +68,9 @@ namespace quick_sort {
 	template<class iter>
 	using it_tag = typename std::iterator_traits<iter>::iterator_category;
 
-	template <typename RandomAccessIterator, typename Compare = std_cmp,
+	template <typename RandomAccessIterator, typename Compare = std::greater<>,
 		std::enable_if_t<std::is_base_of_v<std::random_access_iterator_tag, it_tag<RandomAccessIterator>>, int> = 0>
-		void sort(RandomAccessIterator first, RandomAccessIterator last, Compare comp = Compare()/*std_cmp()*/)
+		void sort(RandomAccessIterator first, RandomAccessIterator last, Compare comp = Compare())
 	{
 		QuickSort::Qsort(first, static_cast<int>(last - first), comp);
 	}

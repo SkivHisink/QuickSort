@@ -6,7 +6,7 @@
 template<typename T>
 std::vector<T> create_rand_and_quicksort(std::vector<T>& input)
 {
-	for (int i = 0; i < 10000000; ++i) {
+	for (int i = 0; i < 100000; ++i) {
 		input.push_back(rand());
 	}
 	std::vector<T> res = input;
