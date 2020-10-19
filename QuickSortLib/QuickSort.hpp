@@ -1,42 +1,48 @@
 ﻿#include <type_traits>
 #include <iterator>
+#include <vector>
 class QuickSort final {
 	QuickSort() = delete;
 	static const int MAX_DEPTH = 48;
+	template<typename T, typename RandomAccessIterator, typename Compare = std::greater<>>
+	static void left_side_sort(size_t& left, size_t& right, T pivot, RandomAccessIterator begin, Compare comp = Compare())
+	{
+		while (left < right) {
+			while (!comp(pivot, begin[right]) && left < right) {
+				--right;
+			}
+			if (left < right) {
+				begin[left++] = begin[right];
+			}
+			while (!comp(begin[left], pivot) && left < right) {
+				++left;
+			}
+			if (left < right) {
+				begin[right--] = begin[left];
+			}
+		}
+	}
 public:
 	template<typename RandomAccessIterator, typename Compare = std::greater<>>
 	static int Qsort(RandomAccessIterator begin, size_t elements, Compare comp = Compare())
 	{
-		size_t begin_pos_container[MAX_DEPTH], end_pos_container[MAX_DEPTH], left, right;
+		size_t left, right;
+		std::vector<size_t> begin_pos_container, end_pos_container;
 		int i = 0;
-		begin_pos_container[0] = 0;
-		end_pos_container[0] = elements;
-		
+		begin_pos_container.assign(MAX_DEPTH, 0);
+		end_pos_container.assign(MAX_DEPTH, elements);
 		while (i >= 0) {
 			left = begin_pos_container[i];
 			right = end_pos_container[i];
 			if (right - left > 1) {
-				size_t middle = left + ((right - left) >> 1);
-				auto pivot = begin[middle];
-				begin[middle] = begin[left];
 				if (i == MAX_DEPTH - 1) {
 					return -1;
 				}
+				size_t middle = left + ((right - left) >> 1);
+				auto pivot = begin[middle];
+				begin[middle] = begin[left];
 				--right;
-				while (left < right) {
-					while (!comp(pivot, begin[right]) && left < right) {
-						--right;
-					}
-					if (left < right)
-						begin[left++] = begin[right]; {
-						while (!comp(begin[left], pivot) && left < right) {
-							++left;
-						}
-					}
-					if (left < right) {
-						begin[right--] = begin[left];
-					}
-				}
+				left_side_sort(left, right, pivot, begin, comp);
 				begin[left] = pivot;
 				middle = left + 1;
 				while (left > begin_pos_container[i] && (!comp(begin[left - 1], pivot) && !comp(pivot, begin[left - 1]))) {
@@ -62,6 +68,7 @@ public:
 		}
 		return 0;
 	}
+
 };
 
 namespace quick_sort {
