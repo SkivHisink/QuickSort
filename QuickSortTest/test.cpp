@@ -150,7 +150,7 @@ namespace NonStandartComparatorTests {
 		std::vector<int> array;
 		for (int i = 0; i < 20; i++)
 			array.push_back(rand());
-		quick_sort::sort(array.begin(), array.end(), comparator());
+		QuickSort::sort(array.begin(), array.end(), comparator());
 		for (int i = 0; i < array.size() - 1; i++)
 		{
 			EXPECT_GT(array[i + 1], array[i]);

@@ -10,7 +10,7 @@ std::vector<T> create_rand_and_quicksort(std::vector<T>& input)
 		input.push_back(rand());
 	}
 	std::vector<T> res = input;
-	quick_sort::sort(res.begin(), res.end());
+	QuickSort::sort(res.begin(), res.end());
 	return res;
 }
 int main() {

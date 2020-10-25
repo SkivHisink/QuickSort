@@ -21,7 +21,7 @@ T create_rand_and_quicksort(T& input)
 		input.push_back(static_cast<type>(static_cast<double>(rand()) / RAND_MAX * 1000));
 	}
 	T res = input;
-	quick_sort::sort(res.begin(), res.end());
+	QuickSort::sort(res.begin(), res.end());
 	return res;
 }
 template<typename T>
@@ -30,7 +30,7 @@ void test_empty_container() {
 	T result;
 	T expected;
 	expected = input;
-	quick_sort::sort(result.begin(), result.end());
+	QuickSort::sort(result.begin(), result.end());
 	std::sort(expected.begin(), expected.end());
 	my_and_expected_result_compare(result.begin(), expected.end(), expected.end());
 }
@@ -51,7 +51,7 @@ void test_all_equal_numbs() {
 	}
 	result = input;
 	auto expected = input;
-	quick_sort::sort(result.begin(), result.end());
+	QuickSort::sort(result.begin(), result.end());
 	std::sort(expected.begin(), expected.end());
 	my_and_expected_result_compare(result.begin(), expected.end(), expected.end());
 }
@@ -66,7 +66,7 @@ void test_reverse_sorted_numbs() {
 	}
 	result = input;
 	expected = input;
-	quick_sort::sort(result.begin(), result.end());
+	QuickSort::sort(result.begin(), result.end());
 	std::sort(expected.begin(), expected.end());
 	my_and_expected_result_compare(result.begin(), expected.end(), expected.end());
 }
@@ -78,7 +78,7 @@ void test_already_sorted_numbs() {
 	}
 	auto result = input;
 	auto expected = input;
-	quick_sort::sort(result.begin(), result.end());
+	QuickSort::sort(result.begin(), result.end());
 	std::sort(expected.begin(), expected.end());
 	my_and_expected_result_compare(result.begin(), expected.end(), expected.end());
 }
@@ -100,7 +100,7 @@ T* create_rand_and_quicksort_for_array(T*& input)
 	for (int i = 0; i < NUMBER_OF_ELESMS; ++i) {
 		res[i] = input[i] = (static_cast<T>(static_cast<double>(rand()) / RAND_MAX * 1000));
 	}
-	quick_sort::sort(&res[0], &res[NUMBER_OF_ELESMS]);
+	QuickSort::sort(&res[0], &res[NUMBER_OF_ELESMS]);
 	return res;
 }
 template<typename T>
@@ -126,7 +126,7 @@ void array_test_empty_array() {
 	T* input = nullptr;
 	T* result = nullptr;
 	T* expected = nullptr;
-	quick_sort::sort(&result, &result);
+	QuickSort::sort(&result, &result);
 	std::sort(&expected, &expected);
 	my_and_expected_result_compare_for_array(result, expected, 0);
 }
@@ -140,7 +140,7 @@ void array_test_reverse_sorted_numbs() {
 	}
 	memcpy(result, input, NUMBER_OF_ELESMS * sizeof(T));
 	memcpy(expected, input, NUMBER_OF_ELESMS * sizeof(T));
-	quick_sort::sort(&result[0], &result[NUMBER_OF_ELESMS]);
+	QuickSort::sort(&result[0], &result[NUMBER_OF_ELESMS]);
 	std::sort(&expected[0], &expected[NUMBER_OF_ELESMS]);
 	my_and_expected_result_compare_for_array(result, expected, 0);
 	delete[] input;
@@ -157,7 +157,7 @@ void array_test_all_equal_numbs() {
 	}
 	memcpy(result, input, NUMBER_OF_ELESMS * sizeof(T));
 	memcpy(expected, input, NUMBER_OF_ELESMS * sizeof(T));
-	quick_sort::sort(&result[0], &result[NUMBER_OF_ELESMS]);
+	QuickSort::sort(&result[0], &result[NUMBER_OF_ELESMS]);
 	std::sort(&expected[0], &expected[NUMBER_OF_ELESMS]);
 	my_and_expected_result_compare_for_array(result, expected, 0);
 	delete[] input;
@@ -174,7 +174,7 @@ void array_test_already_sorted_numbs() {
 	}
 	memcpy(result, input, NUMBER_OF_ELESMS * sizeof(T));
 	memcpy(expected, input, NUMBER_OF_ELESMS * sizeof(T));
-	quick_sort::sort(&result[0], &result[NUMBER_OF_ELESMS]);
+	QuickSort::sort(&result[0], &result[NUMBER_OF_ELESMS]);
 	std::sort(&expected[0], &expected[NUMBER_OF_ELESMS]);
 	my_and_expected_result_compare_for_array(result, expected, 0);
 	delete[] expected;

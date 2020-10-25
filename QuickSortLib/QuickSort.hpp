@@ -22,7 +22,6 @@ class QuickSort final
 		std::swap(arr[i + 1], arr[end_indx]);
 		return (i + 1);
 	}
-public:
 	QuickSort() = delete;
 	template <typename RandomAccessIterator, typename Compare = std::greater<>>
 	static void Qsort(RandomAccessIterator begin, size_t elements, Compare comp = Compare())
@@ -55,17 +54,14 @@ public:
 			}
 		}
 	}
-};
-
-namespace quick_sort
-{
+public:
 	template <class iter>
 	using it_tag = typename std::iterator_traits<iter>::iterator_category;
 
 	template <typename RandomAccessIterator, typename Compare = std::greater<>,
 		std::enable_if_t<std::is_base_of_v<std::random_access_iterator_tag, it_tag<RandomAccessIterator>>, int> = 0>
-		void sort(RandomAccessIterator first, RandomAccessIterator last, Compare comp = Compare())
+		static void sort(RandomAccessIterator first, RandomAccessIterator last, Compare comp = Compare())
 	{
-		QuickSort::Qsort(first, static_cast<int>(last - first), comp);
+		Qsort(first, static_cast<int>(last - first), comp);
 	}
-}
+};
